@@ -1,2 +1,2 @@
-# SocDemRus_milty_bot
+# SocDemRus_multy_bot
  Бот для СДР с различными функциями
