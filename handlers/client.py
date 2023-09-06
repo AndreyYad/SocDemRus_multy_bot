@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from modules.bot_cmds import *
 from modules.messages import MESSAGES
 from modules.bot_dispatcher import dp
+from modules.data import send_anonim_msg
 
 class FSMClient(StatesGroup):
     anonim_msg_text = State()
@@ -29,7 +30,7 @@ async def cmd_send_anonim_msg_func(msg: types.Message):
 
 # state=FSMClient.anonim_msg_text
 async def get_anonim_msg_func(msg: types.Message, state: FSMContext):
-    await msg.reply(msg.text)
+    await msg.reply(await send_anonim_msg(msg))
     await state.finish()
 
 def register_handlers_client():
