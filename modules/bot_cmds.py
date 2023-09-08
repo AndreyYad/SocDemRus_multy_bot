@@ -2,21 +2,33 @@
 Модуль с командами для бота
 '''
 
-# from asyncio import run
+from aiogram import types
 
 from modules.bot_dispatcher import dp
 
-async def send_msg(chat_id: int, text: str, web_prew: bool=False, **kwargs):
+async def send_msg(chat_id: int, text: str, markup: types.InlineKeyboardMarkup=types.InlineKeyboardMarkup(), web_prew: bool=False, **kwargs):
     '''Отправка сообщения'''
-    await dp.bot.send_message(chat_id, text, parse_mode='html', disable_web_page_preview=not web_prew, **kwargs)
+    return await dp.bot.send_message(chat_id, text, reply_markup=markup, parse_mode='html', disable_web_page_preview=not web_prew, **kwargs)
+
+async def send_msg_photo(chat_id: int, photo: types.InputFile, text: str, markup: types.InlineKeyboardMarkup=types.InlineKeyboardMarkup(), **kwargs):
+    '''Отправка фото'''
+    return await dp.bot.send_photo(chat_id, photo, text, reply_markup=markup, parse_mode='html', **kwargs)
+
+async def reply_msg(msg: types.Message, text: str, markup: types.InlineKeyboardMarkup=types.InlineKeyboardMarkup(), web_prew: bool=False, **kwargs):
+    '''Ответ на сообщение'''
+    await msg.reply(text, reply_markup=markup, parse_mode='html', disable_web_page_preview=not web_prew, **kwargs)
 
 async def check_user_in_chat(user_id: int, chat_id: int):
     '''Проверка на членство в чате'''
     return (await dp.bot.get_chat_member(chat_id, user_id))['status'] != 'left'
 
 async def get_chat_name(chat_id: int):
-    '''Проверка на членство в чате'''
+    '''Получение имени чата'''
     return (await dp.bot.get_chat(chat_id))['title']
+
+async def get_user_from_id(user_id: int):
+    '''Получение имени пользователя'''
+    return await dp.bot.get_user(user_id)
 
 if __name__ == '__main__':
     # run()
