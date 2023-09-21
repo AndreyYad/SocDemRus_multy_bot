@@ -1,22 +1,12 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters.state import State, StatesGroup
 
 from modules.bot_cmds import *
 from modules.messages import MESSAGES
 from modules.bot_dispatcher import dp
 from modules.data import *
 from modules.generator_expressions import generator_expression
-
-from modules.markups import markup_start
-
-class FSMClient(StatesGroup):
-    anonim_msg_text = State()
-    sos_confirmation_1 = State()
-    sos_confirmation_2 = State()
-    new_post_text = State()
-    new_post_headline = State()
-    new_post_picture = State()
+from modules.states import FSMClient
 
 async def _reset(msg: types.Message, state: FSMContext):
     '''Сброс состояния'''
@@ -32,19 +22,13 @@ async def start_func(msg: types.Message):
         print(msg.from_user.first_name)
 
 # commands=['cancel']
+# Сброс состояния
 async def cancel_func(msg: types.Message, state: FSMContext):
     await _reset(msg, state)
 
-# commands=['msg_ok']
-async def cmd_send_anonim_msg_func(msg: types.Message):
-    if msg.chat.type == 'private':
-        await FSMClient.anonim_msg_text.set()
-        await reply_msg(msg, MESSAGES['anonim_msg_info'])
-
-# state=FSMClient.anonim_msg_text
-async def get_anonim_msg_func(msg: types.Message, state: FSMContext):
-    await reply_msg(msg, await send_anonim_msg(msg))
-    await state.finish()
+# --------------------------------
+# -- Удаление со всех чатов СДР --
+# --------------------------------
 
 # commands=['sos']
 async def cmd_sos_func(msg: types.Message):
@@ -107,11 +91,18 @@ async def new_post_picture_func(msg: types.Message, state: FSMContext):
     await state.finish()
     await reply_msg(msg, 'asdasd')
 
-def register_handlers_client():
+# rexexp='^+текст .'
+async def add_text_po_post(msg: types.Message):
+    print(msg)
+    if msg.chat.id == CHATS['redactors']:
+        print(msg)
+
+async def aaa(msg: types.Message):
+    print(msg)
+
+def register_handlers():
     dp.register_message_handler(start_func, commands=['start'], state=None)
     dp.register_message_handler(cancel_func, commands=['cancel'], state='*')
-    dp.register_message_handler(cmd_send_anonim_msg_func, commands=['msg_ok'], state=None)
-    dp.register_message_handler(get_anonim_msg_func, state=FSMClient.anonim_msg_text)
     dp.register_message_handler(cmd_sos_func, commands=['sos'], state=None)
     dp.register_message_handler(sos_confirmation_1_func, state=FSMClient.sos_confirmation_1)
     dp.register_message_handler(sos_confirmation_2_func, state=FSMClient.sos_confirmation_2)
@@ -119,3 +110,4 @@ def register_handlers_client():
     dp.register_message_handler(new_post_text_func, state=FSMClient.new_post_text)
     dp.register_message_handler(new_post_headline_func, state=FSMClient.new_post_headline)
     dp.register_message_handler(new_post_picture_func, state=FSMClient.new_post_picture, content_types=["photo", "text"])
+    dp.register_message_handler(add_text_po_post, regexp='^\+текст .')
