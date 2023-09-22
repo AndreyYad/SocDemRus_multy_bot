@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from modules.bot_cmds import *
-from modules.data import *
+from modules.bot_cmds import reply_msg
+from modules.data import send_anonim_msg
 from modules.messages import MESSAGES
 from modules.states import FSMClient
 from modules.bot_dispatcher import dp
