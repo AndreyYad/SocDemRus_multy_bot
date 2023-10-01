@@ -2,7 +2,7 @@ from generic.bot_dispatcher import *
 from aiogram.utils import executor
 from aiogram.types import Message
 
-from topic_signalbot import topic_signalbot
+from .topic_signalbot import topic_signalbot
 
 signalbot=topic_signalbot()
 

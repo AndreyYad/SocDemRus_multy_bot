@@ -99,7 +99,7 @@ class Tunnels:
             select id from tunnels
             where freelance_chat_id={bindable_chat}
         """)
-        answer=self.cursor.fetchone()
+        answer = self.cursor.fetchone()
         return answer==None or answer[0]==None
     
     def destroy_tunnel(self,tunnel_id:int):

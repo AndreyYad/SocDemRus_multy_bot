@@ -1,8 +1,8 @@
 from aiogram.types import Message
 
-from modules.tunnels import Tunnels
-from modules.messages import MESSAGES
-from modules.bot_cmds import *
+from .database.tunnels import Tunnels
+from ..generic.messages import MESSAGES
+from ..generic.bot_cmds import *
 
 class topic_signalbot:
     def __init__(self):
