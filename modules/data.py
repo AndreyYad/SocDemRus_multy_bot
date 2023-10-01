@@ -2,10 +2,10 @@ from aiogram import types
 from aiogram.dispatcher.storage import FSMContextProxy
 
 from modules import sql_cmds
-from modules.bot_cmds import *
-from modules.config import CHATS, COULDDAWN_ANONIM_MSG
-from modules.messages import MESSAGES
-from modules.bot_dispatcher import dp
+from functional_sectors.generic.bot_cmds import *
+from functional_sectors.generic.config import CHATS, COULDDAWN_ANONIM_MSG
+from functional_sectors.generic.messages import MESSAGES
+from functional_sectors.generic.bot_dispatcher import dp
 
 async def send_anonim_msg(msg: types.Message):
     user_id = msg.from_user.id

@@ -4,7 +4,7 @@
 
 from aiogram import types
 
-from modules.bot_dispatcher import dp
+from functional_sectors.generic.bot_dispatcher import dp
 
 async def send_msg(chat_id: int, text: str, markup: types.InlineKeyboardMarkup=types.InlineKeyboardMarkup(), web_prew: bool=False, **kwargs):
     '''Отправка сообщения'''
