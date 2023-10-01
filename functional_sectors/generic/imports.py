@@ -19,6 +19,8 @@ def _import(
         pass
     except TypeError:
         pass
+    except KeyError:
+        pass
 
 def get_states():
     state_classes = []
