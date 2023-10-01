@@ -30,6 +30,13 @@ async def get_user_from_id(user_id: int):
     '''Получение имени пользователя'''
     return await dp.bot.get_user(user_id)
 
+async def send_to_topic(text:str,topic_chat_id:int,topic_id:int, **kwargs):
+    await dp.bot.send_message(topic_chat_id,text,parse_mode="html",reply_to_message_id=topic_id,**kwargs)
+
+async def forward_msg(chat_id_to: int, chat_id_from: int, msg_id: int, **kwargs):
+    '''Пересылка сообщения'''
+    await dp.bot.forward_message(chat_id_to, chat_id_from, msg_id, **kwargs)
+
 if __name__ == '__main__':
     # run()
     pass
