@@ -4,7 +4,7 @@ from .database.tunnels import Tunnels
 from ..generic.messages import MESSAGES
 from ..generic.bot_cmds import *
 
-class TopicSignalbot:
+class topic_signalbot:
 
     def __init__(self):
         self.__tunnels = Tunnels()
