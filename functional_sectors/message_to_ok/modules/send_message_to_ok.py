@@ -4,7 +4,7 @@ from ...generic.bot_cmds import check_user_in_chat, send_msg, get_chat_name
 from ...generic.config import CHATS, COULDDAWN_ANONIM_MSG
 from ..database import set_end_cd, get_end_cd
 
-async def send_anonim_msg(msg: types.Message):
+async def send_anonym_msg(msg: types.Message):
     user_id = msg.from_user.id
     msg_time = msg.date.timestamp()
     if await check_user_in_chat(user_id, CHATS['work']):

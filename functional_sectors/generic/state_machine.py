@@ -1,7 +1,7 @@
 from aiogram.dispatcher.filters.state import StatesGroup
-from .imports import get_states
+from ..message_to_ok.states import MTKStates
 
-class FSMClient(*get_states(), StatesGroup):
+class FSMClient(MTKStates, StatesGroup):
     pass
     # anonim_msg_text = State()
 
