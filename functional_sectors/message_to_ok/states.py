@@ -1,4 +1,4 @@
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
-class MTKStates(StatesGroup):
+class States(StatesGroup):
     anonim_msg_text = State()
