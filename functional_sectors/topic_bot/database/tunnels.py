@@ -11,18 +11,20 @@ class Tunnels:
             topic_id integer,
             freelance_chat_id integer unique
         )""")
-    def __init__(self,dbPath="tunnels.db"):
-        self.db_path=dbPath
+    def __init__(self, dbPath="tunnels.db"):
+        self.db_path = dbPath
         self.__launch_db()
         self.__init_tunnels_table()
+
     def __reboot_db(self):
         self.dispose()
         self.__launch_db()
+
     def __launch_db(self):
         self.db_connection=sqlite3.connect(self.db_path)
         self.cursor=self.db_connection.cursor()
     
-    def init_tunnel(self,topic_chat_id:int,topic_id:int)->int:
+    def init_tunnel(self, topic_chat_id:int,topic_id:int)->int:
         self.cursor.execute(f"""
             insert into tunnels (topic_chat_id,topic_id,freelance_chat_id)
             values({topic_chat_id},{topic_id},null)
@@ -61,11 +63,13 @@ class Tunnels:
             select id from tunnels 
             where freelance_chat_id={fl_id}
         """
+    
     def __get_req_by_topic_id(self,chat_id,topic_id):
         return f"""
             select id from tunnels 
             where topic_chat_id={chat_id} and topic_id={topic_id}
         """
+    
     def get_tunnel_id(self,chat_id,topic_id:int|None)->(int|None):
         cmd=None
         if topic_id==None:

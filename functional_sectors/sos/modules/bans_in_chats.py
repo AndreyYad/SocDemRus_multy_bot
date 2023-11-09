@@ -2,7 +2,7 @@ from aiogram.utils.exceptions import CantRestrictChatOwner
 
 from ...generic.bot_cmds import check_user_in_chat, send_msg, get_chat_name
 from ...generic.config import CHATS
-from ...generic.messages import MESSAGES
+from .messages import MESSAGES
 from ...generic.bot_dispatcher import dp
     
 async def ban_in_all_chats(user_id: int):

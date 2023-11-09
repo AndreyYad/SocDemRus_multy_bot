@@ -35,5 +35,6 @@ def get_states():
 def start_modules_import():
     for it in scandir('functional_sectors/'):
         if it.is_dir() and it.name != '__pycache__':
+            print(it.name)
             _import(it.name, 'handlers')
-            _import(it.name, 'database', 'create_database', call=[])
+            _import(it.name, 'create_database', 'create_database', call=[])

@@ -10,6 +10,7 @@ config = {
         "redactors" : 0,
         "designers" : 0
     },
+    "developers" : [],
     "coulddawn_anonim_msg" : 3600
 }
 
