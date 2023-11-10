@@ -1,12 +1,12 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from ..generic.bot_cmds import reply_msg
-from .modules.messages import MESSAGES
-from ..generic.state_machine import FSMClient
-from ..generic.bot_dispatcher import dp
-from ..generic.reset_state import reset
+from main_modules.bot_cmds import reply_msg
+from main_modules.state_machine import FSMClient
+from main_modules.bot_dispatcher import dp
+from main_modules.reset_state import reset
 from .modules.bans_in_chats import ban_in_all_chats
+from .modules.messages import MESSAGES
 
 @dp.message_handler(commands=['sos'], state=None)
 async def cmd_sos_func(msg: types.Message):

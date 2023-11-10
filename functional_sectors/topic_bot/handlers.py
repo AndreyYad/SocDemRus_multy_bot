@@ -1,4 +1,4 @@
-from generic.bot_dispatcher import *
+from main_modules.bot_dispatcher import *
 from aiogram.utils import executor
 from aiogram.types import Message
 

@@ -1,11 +1,11 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from .bot_cmds import reply_msg, get_chat_name
+from main_modules.bot_cmds import reply_msg, get_chat_name
+from main_modules.reset_state import reset
+from main_modules.config import DEVELOPERS
+from main_modules.bot_dispatcher import dp
 from .messages import MESSAGES
-from .config import DEVELOPERS
-from .bot_dispatcher import dp
-from .reset_state import reset
 
 @dp.message_handler(commands=['start'], state=None)
 async def start_func(msg: types.Message):

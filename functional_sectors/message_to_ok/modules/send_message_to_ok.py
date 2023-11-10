@@ -1,7 +1,7 @@
 from aiogram import types
 
-from ...generic.bot_cmds import check_user_in_chat, send_msg, get_chat_name
-from ...generic.config import CHATS, COULDDAWN_ANONIM_MSG
+from main_modules.bot_cmds import check_user_in_chat, send_msg, get_chat_name
+from main_modules.config import CHATS, COULDDAWN_ANONIM_MSG
 from .database import set_end_cd, get_end_cd, save_sent_message
 from .messages import MESSAGES
 

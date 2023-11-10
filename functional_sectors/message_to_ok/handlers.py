@@ -1,10 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from ..generic.bot_cmds import reply_msg, send_msg
-from ..generic.state_machine import FSMClient
-from ..generic.bot_dispatcher import dp
-from ..generic.config import CHATS
+from main_modules.bot_cmds import reply_msg, send_msg
+from main_modules.state_machine import FSMClient
+from main_modules.bot_dispatcher import dp
+from main_modules.config import CHATS
 from .modules.send_message_to_ok import send_anonim_msg
 from .modules.database import get_author_id
 from .modules.messages import MESSAGES

@@ -1,7 +1,7 @@
 from aiogram.utils import executor
 
-from functional_sectors.generic.bot_dispatcher import dp
-from functional_sectors.generic.imports import start_modules_import
+from main_modules.bot_dispatcher import dp
+from main_modules.imports import start_modules_import
 
 from sys import modules
 

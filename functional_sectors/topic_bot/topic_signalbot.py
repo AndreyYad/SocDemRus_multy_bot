@@ -2,7 +2,7 @@ from aiogram.types import Message
 
 from .database.tunnels import Tunnels
 from ..generic.messages import MESSAGES
-from ..generic.bot_cmds import *
+from main_modules.bot_cmds import *
 
 class topic_signalbot:
 

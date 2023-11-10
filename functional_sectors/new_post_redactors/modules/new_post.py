@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher.storage import FSMContextProxy
 
-from ...generic.bot_cmds import send_msg, send_msg_photo
-from ...generic.config import CHATS
+from main_modules.bot_cmds import send_msg, send_msg_photo
+from main_modules.config import CHATS
 from .messages import MESSAGES
 from .database import save_new_post
 

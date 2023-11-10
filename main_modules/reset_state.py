@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from functional_sectors.generic.bot_cmds import reply_msg
+from main_modules.bot_cmds import reply_msg
 from functional_sectors.generic.messages import MESSAGES
 
 async def reset(msg: types.Message, state: FSMContext):
