@@ -1,5 +1,6 @@
 from os import scandir
 from importlib import import_module
+from loguru import logger
 
 def _import(
           pack: str, 
@@ -10,31 +11,42 @@ def _import(
     try:
         if object_ != None:
             if call != None:
-                return import_module(f'functional_sectors.{pack}.{module}').__dict__[object_](*call)
+                logger.debug(f'Попытка вызвать объект "{object_}" из "functional_sectors.{pack}.{module}" с аргументами: {call}')
+                import_module(f'functional_sectors.{pack}.{module}').__dict__[object_](*call)
             else:
-                return import_module(f'functional_sectors.{pack}.{module}').__dict__[object_]
+                logger.debug(f'Попытка вернуть объект "{object_}" из "functional_sectors.{pack}.{module}"')
+                result = import_module(f'functional_sectors.{pack}.{module}').__dict__[object_]
+                logger.debug('Успешно!')
+                return result
         else:
-            return import_module(f'functional_sectors.{pack}.{module}')
+            logger.debug(f'Попытка импортировать "functional_sectors.{pack}.{module}"')
+            import_module(f'functional_sectors.{pack}.{module}')
+            
     except ModuleNotFoundError:
-        pass
+        logger.warning('Не успешно! (ModuleNotFoundError)')
     except TypeError:
-        pass
+        logger.warning('Не успешно! (TypeError)')
     except KeyError:
-        pass
+        logger.warning('Не успешно! (KeyError)')
+    else:
+        logger.debug('Успешно!')
+        return True
+    return False
 
 def get_states():
     state_classes = []
 
     for it in scandir('functional_sectors/'):
         if it.is_dir() and it.name != '__pycache__':
-            if _import(it.name, 'states', 'States') != None:
-                state_classes.append(_import(it.name, 'states', 'States'))
+            import_states = _import(it.name, 'states', 'States')
+            if import_states != None:
+                state_classes.append(import_states)
 
     return state_classes
 
 def start_modules_import():
+    logger.info('Начало импорта хендлеров и создания баз данных секторов')
     for it in scandir('functional_sectors/'):
         if it.is_dir() and it.name != '__pycache__':
-            print(it.name)
             _import(it.name, 'handlers')
             _import(it.name, 'create_database', 'create_database', call=[])
