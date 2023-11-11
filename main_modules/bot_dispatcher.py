@@ -1,12 +1,13 @@
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from loguru import logger
 
-from functional_sectors.generic.config import TOKEN
+from main_modules.config import TOKEN
 
 storage = MemoryStorage()
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
-print('Бот запущен!')
+logger.info('Бот запущен!')
