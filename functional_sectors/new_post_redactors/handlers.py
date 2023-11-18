@@ -6,8 +6,8 @@ from main_modules.bot_dispatcher import dp
 from main_modules.config import CHATS
 from main_modules.state_machine import FSMClient
 from main_modules.reset_state import reset
-from modules.messages import MESSAGES
-from modules.new_post import new_post_to_red
+from .modules.messages import MESSAGES
+from .modules.new_post import new_post_to_red
 
 @dp.message_handler(commands=['new_post'], state=None)
 async def cmd_new_post_func(msg: types.Message):

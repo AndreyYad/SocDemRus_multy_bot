@@ -42,15 +42,15 @@ class Tunnels:
             return None
         freelance_chat_id=answer[0]
         return freelance_chat_id   
-    def get_root_chat(self,freelance_chat):
-        self.cursor.execute(f'''
-            select topic_chat_id, topic_id from tunnels
-            where freelance_chat_id={freelance_chat}
-        ''')
-        answer=self.cursor.fetchall()
-        if(answer==None):
-            return None
-        return answer[0]
+    # def get_root_chat(self,freelance_chat):
+    #     self.cursor.execute(f'''
+    #         select topic_chat_id, topic_id from tunnels
+    #         where freelance_chat_id={freelance_chat}
+    #     ''')
+    #     answer=self.cursor.fetchall()
+    #     if(answer==None):
+    #         return None
+    #     return answer[0]
     def connect_to_tunnel(self,tunnel_id:int,freelance_id:int):
         self.cursor.execute(f"""
             update tunnels

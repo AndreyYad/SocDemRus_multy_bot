@@ -7,7 +7,7 @@ from main_modules.imports import start_modules_import
 
 start_modules_import()
 
-# print(modules.keys())
+print(modules.keys())
 logger.info('Дудлиду полнейший')
 
 executor.start_polling(dp)
