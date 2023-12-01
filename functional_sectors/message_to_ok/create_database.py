@@ -3,7 +3,7 @@ from os import mkdir, path
 
 path = path.abspath(__file__)[:path.abspath(__file__).rindex('\\')]
 
-def create_database():
+def create_database_message_to_ok():
     '''Создание таблиц'''
     try:
         mkdir(path + '/database')

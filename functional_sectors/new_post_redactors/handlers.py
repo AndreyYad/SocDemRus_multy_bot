@@ -45,15 +45,14 @@ async def new_post_picture_func(msg: types.Message, state: FSMContext):
     await state.finish()
     await reply_msg(msg, 'asdasd')
 
-# regexp='^\+текст .'
-async def add_text_po_post(msg: types.Message):
-    print(msg)
+# regexp='\A!текст '
+async def add_text_to_post(msg: types.Message):
     if msg.chat.id == CHATS['redactors']:
         print(msg)
         
 def register_handlers_new_post_redactors():
-    dp.register_message_handler(cmd_new_post_func, commands=['msg_ok'], state=None)
+    dp.register_message_handler(cmd_new_post_func, commands=['new_post'], state=None)
     dp.register_message_handler(new_post_text_func, state=FSMClient.new_post_text)
     dp.register_message_handler(new_post_headline_func, state=FSMClient.new_post_headline)
     dp.register_message_handler(new_post_picture_func, state=FSMClient.new_post_picture, content_types=["photo", "text"])
-    dp.register_message_handler(add_text_po_post, regexp='^\+текст .')
+    dp.register_message_handler(add_text_to_post, regexp='\A!текст ')
