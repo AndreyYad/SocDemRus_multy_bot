@@ -11,5 +11,5 @@ def create_database_new_post_redactors():
         pass
     with connect(path + '/database/db_new_post.sql') as conn:
         cur = conn.cursor()
-        cur.execute("CREATE TABLE IF NOT EXISTS new_post (msg_id int PRIMARY KEY, user_id int, text_post text, headline_post varchar(200), picture_post bit)")
+        cur.execute("CREATE TABLE IF NOT EXISTS new_post (post_id INTEGER PRIMARY KEY AUTOINCREMENT, msg_id int, user_id int, text_post text, headline_post varchar(200), picture_post varchar(150))")
         conn.commit()

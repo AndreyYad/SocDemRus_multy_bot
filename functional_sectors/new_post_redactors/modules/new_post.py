@@ -1,58 +1,33 @@
-from aiogram import types
-from aiogram.dispatcher.storage import FSMContextProxy
-
-from main_modules.bot_cmds import send_msg, send_msg_photo
+from main_modules.bot_cmds import send_msg, send_msg_photo, get_chat_member, get_inputfile
 from main_modules.config import CHATS
 from .messages import MESSAGES
-from .database import save_new_post
-
-async def new_post_to_red(user: types.user.User, data: FSMContextProxy):
-    if data['new_post_text'] == 'нет':
-        text = 'Пусто'
-    else:
-        text = data['new_post_text']
-
-    if data['new_post_headline'] == 'нет':
-        headline = 'Пусто'
-    else:
-        headline = data['new_post_headline']
-
-    if data['new_post_picture'] == 'нет':
-        photo = 0
-    elif data['new_post_picture'] == 'не будет':
-        photo = None
-    else:
-        photo = 1
-        
-    if photo == None:
+from .database import get_post_data, set_msg_id_post
+    
+async def send_post_from_bd(post_id: int):
+    
+    user_id, text_post, headline_post, photo_post = await get_post_data(post_id)
+    
+    msg_text = MESSAGES['new_post_in_red'].format(
+        user_id, 
+        (await get_chat_member(user_id, CHATS['redactors']))['user']['first_name'],
+        headline_post, 
+        text_post
+    )
+    
+    if photo_post == None:
         msg = await send_msg(
             CHATS['designers'], 
-            MESSAGES['new_post_in_red'].format(
-                user.id, 
-                user.first_name,
-                data['new_post_headline'], 
-                data['new_post_text']
-            )
+            msg_text
         )
     else:
-        if photo:
-            photo_msg = data['new_post_picture']
+        if photo_post:
+            photo_msg = await get_inputfile(photo_post)
         else:
             photo_msg = open('images/defult.png', 'rb')
         msg = await send_msg_photo(
             CHATS['designers'], 
             photo_msg,
-            MESSAGES['new_post_in_red'].format(
-                user.id, 
-                user.first_name,
-                data['new_post_headline'], 
-                data['new_post_text']
-            )
+            msg_text
         )
-
-    if headline == 'Пусто':
-        headline = None
-    if text == 'Пусто':
-        text = None
-
-    await save_new_post(msg.message_id, user.id, text, headline, photo)
+        
+    await set_msg_id_post(post_id, msg.message_id)

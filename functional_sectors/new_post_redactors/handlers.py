@@ -7,13 +7,12 @@ from main_modules.config import CHATS
 from sectors_work.state_machine import FSMClient
 from main_modules.reset_state import reset
 from .modules.messages import MESSAGES
-from .modules.new_post import new_post_to_red
+from .modules.new_post import send_post_from_bd
+from .modules.database import save_new_post
 
 # commands=['new_post'], state=None
 async def cmd_new_post_func(msg: types.Message):
-    print(1)
     if msg.chat.type == 'private' and await check_user_in_chat(msg.from_id, CHATS['redactors']):
-        print(2)
         await FSMClient.new_post_text.set()
         await reply_msg(msg, MESSAGES['new_post_text'])
 
@@ -41,9 +40,11 @@ async def new_post_picture_func(msg: types.Message, state: FSMContext):
         else:
             await reset(msg, state)
             return
-        await new_post_to_red(msg.from_user, data)
+        post_id = await save_new_post(msg.from_id, data)
+        await send_post_from_bd(post_id)
+        # await new_post_to_red(msg.from_user, data)
     await state.finish()
-    await reply_msg(msg, 'asdasd')
+    await reply_msg(msg, 'Предложение поста отправленно в беседу редакторов!')
 
 # regexp='\A!текст '
 async def add_text_to_post(msg: types.Message):
