@@ -1,14 +1,16 @@
-from aiogram.utils import executor
 from loguru import logger
-from sys import modules
+from asyncio import run
 
-from main_modules.bot_dispatcher import dp
-from sectors_work.registration_handlers import register_handlers
+from main_modules.dispatcher import dp
+from main_modules.bot import bot
+from sectors_work.registration_handlers import registration_handlers
 from sectors_work.registration_callback import registration_callback
 from sectors_work.create_db import start_create_database
 
-register_handlers()
+registration_handlers()
 registration_callback()
+
 start_create_database()
 
-executor.start_polling(dp)
+logger.info('Бот запущен!')
+run(dp.start_polling(bot))

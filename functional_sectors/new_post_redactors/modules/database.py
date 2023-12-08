@@ -1,13 +1,12 @@
 '''Методы связаные с работой с базами данных'''
 
 from aiosqlite import connect
-from aiogram.dispatcher.storage import FSMContextProxy
 from os import path
 from time import time
 
 path = path.abspath(__file__)[:path.abspath(__file__).rindex('\\modules')]
 
-async def save_new_post(user_id: int, data: FSMContextProxy) -> int:
+async def save_new_post(user_id: int, data) -> int:
     '''
     Сохранение данных о новом посте для оценки в редактуре
     

@@ -1,5 +1,6 @@
-from functional_sectors.new_post_redactors.callbacks import callback
-from main_modules.bot_dispatcher import dp
+from aiogram import F
+
+from functional_sectors.new_post_redactors.callbacks import register_callbacks_new_post_redactors
 
 def registration_callback():
-    dp.register_callback_query_handler(callback)
+    register_callbacks_new_post_redactors()

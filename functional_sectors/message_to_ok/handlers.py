@@ -1,26 +1,29 @@
-from aiogram import types
-from aiogram.dispatcher import FSMContext
+from aiogram import types, F, Router
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import default_state
+from aiogram.filters import Command, StateFilter
 
 from main_modules.bot_cmds import reply_msg, send_msg
 from sectors_work.state_machine import FSMClient
-from main_modules.bot_dispatcher import dp
 from main_modules.config import CHATS
 from .modules.send_message_to_ok import send_anonim_msg
 from .modules.database import get_author_id
 from .modules.messages import MESSAGES
 
-# commands=['msg_ok'], state=None
-async def cmd_send_anonim_msg_func(msg: types.Message):
+router = Router()
+
+# Command('msg_ok'), StateFilter(default_state)
+async def cmd_send_anonim_msg_func(msg: types.Message, state: FSMContext):
     if msg.chat.type == 'private':
-        await FSMClient.anonim_msg_text.set()
+        await state.set_state(FSMClient.anonim_msg_text)
         await reply_msg(msg, MESSAGES['anonim_msg_info'])
 
-# state=FSMClient.anonim_msg_text
+# StateFilter(FSMClient.anonim_msg_text)
 async def get_anonim_msg_func(msg: types.Message, state: FSMContext):
     await reply_msg(msg, await send_anonim_msg(msg))
-    await state.finish()
+    await state.clear()
     
-# regexp='\A!'
+# F.text.regexp(r'\A!')
 async def reaply_to_msg_in_ok(msg: types.Message):
     if msg.text == '!':
         return
@@ -33,6 +36,6 @@ async def reaply_to_msg_in_ok(msg: types.Message):
             await reply_msg(msg, MESSAGES['answer_sent'])
             
 def register_handlers_message_to_ok():
-    dp.register_message_handler(cmd_send_anonim_msg_func, commands=['msg_ok'], state=None)
-    dp.register_message_handler(get_anonim_msg_func, state=FSMClient.anonim_msg_text)
-    dp.register_message_handler(reaply_to_msg_in_ok, regexp='\A!')
+    router.message.register(cmd_send_anonim_msg_func, Command('msg_ok'), StateFilter(default_state))
+    router.message.register(get_anonim_msg_func, F.text ,StateFilter(FSMClient.anonim_msg_text))
+    router.message.register(reaply_to_msg_in_ok, F.text.regexp(r'\A!'))
