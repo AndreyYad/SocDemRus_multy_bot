@@ -2,6 +2,7 @@ from aiogram import types, F, Router
 from aiogram.filters import CommandStart, Command, StateFilter
 from aiogram.fsm.state import default_state
 from aiogram.fsm.context import FSMContext
+from loguru import logger
 
 from main_modules.bot_cmds import reply_msg, get_chat_name, send_msg
 from main_modules.reset_state import reset
@@ -24,6 +25,10 @@ async def name_chat(msg: types.Message):
     if msg.chat.id in DEVELOPERS:
         await reply_msg(msg, await get_chat_name(int(msg.text[6:])))
         
+async def get_chat_id(msg: types.Message):
+    if msg.from_user.id in DEVELOPERS:
+        logger.debug(f'Айди этого чата: {msg.chat.id}')
+        
 # Command('debug')
 async def debug(msg: types.Message):
     # print((await get_chat_member(msg.from_user.id, msg.chat.id)).status._value_)
@@ -39,3 +44,4 @@ async def register_handlers_generic():
     router.message.register(cancel_func, Command('cancel'), ~StateFilter(default_state))
     router.message.register(name_chat, F.text.regexp(r'\A!name -\d+\Z'), StateFilter(default_state))
     router.message.register(debug, Command('debug'))
+    router.message.register(get_chat_id, Command('id'))
