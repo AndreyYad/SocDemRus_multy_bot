@@ -80,7 +80,7 @@ async def send_to_design(post_id: int):
     text = post_data[1]
     headline = post_data[2]
     photo = post_data[3]
-    if len(await get_likers(post_id=post_id)) >= 1 and 'Пусто' not in [text, headline] and (photo != ID_EMPTY_PICTURE or photo == None):
+    if len(await get_likers(post_id=post_id)) >= 4 and 'Пусто' not in [text, headline] and (photo != ID_EMPTY_PICTURE or photo == None):
         await edit_msg_any(
             await get_text_msg(post_id, type=4), 
             CHATS['redactors'], 

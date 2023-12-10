@@ -18,8 +18,6 @@ async def callback_likes(call: CallbackQuery):
     post_id = await get_post_id_from_msg_id(msg_id)
     with_photo = call.message.photo != None
     
-    print(await get_author(post_id=post_id))
-    
     if (user_id == await get_author(post_id=post_id)) and liking:
         await call.answer('Нельзя ставить лайк своему посту!')
         return
