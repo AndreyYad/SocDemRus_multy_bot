@@ -1,5 +1,3 @@
-from loguru import logger
-
 from main_modules.bot_cmds import send_msg, send_msg_photo, get_inputfile, get_name_user, edit_msg_any
 from main_modules.config import CHATS, ID_EMPTY_PICTURE
 from .messages import MESSAGES

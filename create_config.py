@@ -11,7 +11,9 @@ config = {
         "designers" : 0
     },
     "developers" : [],
-    "coulddawn_anonim_msg" : 3600
+    "coulddawn_anonim_msg" : 3600,
+    "time_for_repost" : 86400,
+    "id_empty_picture" : "AgACAgIAAxkBAAIGnmV0opeek2Bqvjnz95kY456N0engAAIl1DEb5VypSxcXAAFfabTvYgEAAwIAA3gAAzME"
 }
 
 with open('config.json', 'w') as file:
