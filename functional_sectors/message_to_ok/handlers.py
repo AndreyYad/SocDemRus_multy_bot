@@ -25,17 +25,13 @@ async def get_anonim_msg_func(msg: types.Message, state: FSMContext):
     
 # F.text.regexp(r'\A!')
 async def reaply_to_msg_in_ok(msg: types.Message):
-    if msg.text == '!':
-        return
     reaply_msg = msg.reply_to_message
-    if msg.chat.id == CHATS['org_com'] and reaply_msg != None:
-        author_id = await get_author_id(reaply_msg.message_id)
-        print(author_id)
-        if author_id != None:
-            await send_msg(author_id, MESSAGES['answer'].format(msg.text[1:]))
-            await reply_msg(msg, MESSAGES['answer_sent'])
+    author_id = await get_author_id(reaply_msg.message_id)
+    if author_id != None:
+        await send_msg(author_id, MESSAGES['answer'].format(msg.text[1:]))
+        await reply_msg(msg, MESSAGES['answer_sent'])
             
-def register_handlers_message_to_ok():
+async def register_handlers_message_to_ok():
     router.message.register(cmd_send_anonim_msg_func, Command('msg_ok'), StateFilter(default_state))
     router.message.register(get_anonim_msg_func, F.text ,StateFilter(FSMClient.anonim_msg_text))
-    router.message.register(reaply_to_msg_in_ok, F.text.regexp(r'\A!'))
+    router.message.register(reaply_to_msg_in_ok, F.text.regexp(r'\A!.') & (F.chat.id == CHATS['org_com']) & (F.reply_to_message != None))

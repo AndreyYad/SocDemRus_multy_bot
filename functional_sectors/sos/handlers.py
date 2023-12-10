@@ -27,6 +27,6 @@ async def sos_confirmation_func(msg: types.Message, state: FSMContext):
         await ban_in_all_chats(msg.from_user.id)
         await reply_msg(msg, MESSAGES['sos_succes'])
         
-def register_handlers_sos():
+async def register_handlers_sos():
     router.message.register(cmd_sos_func, Command('sos'), StateFilter(default_state))
     router.message.register(sos_confirmation_func, StateFilter(FSMClient.sos_confirmation))

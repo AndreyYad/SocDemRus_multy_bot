@@ -26,13 +26,15 @@ async def name_chat(msg: types.Message):
         
 # Command('debug')
 async def debug(msg: types.Message):
+    # print((await get_chat_member(msg.from_user.id, msg.chat.id)).status._value_)
+    # print(msg.chat.id)
     if msg.chat.id in DEVELOPERS:
         # await send_msg_photo(msg.chat.id, await get_inputfile('AgACAgIAAxkBAAIDMmVsXhMkh4resfYAAWwtq_YBSghbJQACldAxG7kIYUsiIC7pD9f8AgEAAwIAA20AAzME'), '')
         # await state.set_state(FSMClient.anonim_msg_text)
         await send_msg(msg.chat.id, 'привет, это дебаг!')
         
         
-def register_handlers_generic():
+async def register_handlers_generic():
     router.message.register(start_func, CommandStart(), StateFilter(default_state))
     router.message.register(cancel_func, Command('cancel'), ~StateFilter(default_state))
     router.message.register(name_chat, F.text.regexp(r'\A!name -\d+\Z'), StateFilter(default_state))

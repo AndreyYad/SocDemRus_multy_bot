@@ -2,8 +2,10 @@
 Модуль с командами для бота
 '''
 
+from loguru import logger
 from aiogram import types
 from aiogram import exceptions
+from aiogram.types.input_media_photo import InputMediaPhoto
 
 
 from .config import TOKEN, CHATS
@@ -28,20 +30,33 @@ async def edit_msg_text(text: str, chat_id: int, msg_id: int, markup: types.Inli
     try:
         await bot.edit_message_text(text, chat_id, msg_id, reply_markup=markup, **kwargs)
         return True
-    except exceptions.TelegramBadRequest:
+    except exceptions.TelegramBadRequest as error:
+        logger.error(error)
         return False
-    
-# async def edit_msg_media(text: str, chat_id: int, msg_id: int, markup: types.InlineKeyboardMarkup=empty_markups, **kwargs):
-#     '''Редактирование сообщения'''
-#     await router.bot.edit_message_media(text, chat_id, msg_id, reply_markup=markup, **kwargs)
 
 async def edit_msg_caption(text: str, chat_id: int, msg_id: int, markup: types.InlineKeyboardMarkup=empty_markups, **kwargs):
     '''Редактирование подписи(текста в сообщении с медиа)'''
     try:
         await bot.edit_message_caption(chat_id, msg_id, caption=text, reply_markup=markup, **kwargs)
         return True
-    except exceptions.TelegramBadRequest:
+    except exceptions.TelegramBadRequest as error:
+        logger.error(error)
         return False
+    
+async def edit_msg_media(chat_id: int, msg_id: int, markup: types.InlineKeyboardMarkup=empty_markups, file: InputMediaPhoto | None=None, file_id: str=''):
+    if file is None:
+        file = await get_inputfile(file_id)
+    await bot.edit_message_media(InputMediaPhoto(media=file), chat_id, msg_id, reply_markup=markup)
+    
+async def edit_msg_any(text: str, chat_id: int, msg_id: int, markup: types.InlineKeyboardMarkup=empty_markups, **kwargs):
+    '''Редактирвоание любого сообщения с текстом'''
+    args = [text, chat_id, msg_id, markup]
+    if not await edit_msg_caption(*args, **kwargs):
+        await edit_msg_text(*args, **kwargs)
+        
+async def delete_msg(chat_id: int, msg_id: int):
+    '''Удаление сообщения'''
+    await bot.delete_message(chat_id, msg_id)
 
 async def get_chat_member(user_id: int, chat_id: int):
     '''Получение пользователя из чата'''
