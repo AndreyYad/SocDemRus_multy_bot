@@ -153,3 +153,4 @@ cython_debug/
 
 config.json
 database/msg_time.sql
+*.sql
