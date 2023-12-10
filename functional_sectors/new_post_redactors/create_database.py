@@ -1,7 +1,7 @@
 from sqlite3 import connect
 from os import mkdir, path
 
-path = path.abspath(__file__)[:path.abspath(__file__).rindex('\\')]
+path = path.abspath(__file__)[:path.abspath(__file__).rindex('/')]
 
 def create_database_new_post_redactors():
     '''Создание таблиц'''
