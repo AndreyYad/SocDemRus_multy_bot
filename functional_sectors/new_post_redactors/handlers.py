@@ -91,6 +91,9 @@ async def delete_post(msg: types.Message):
             await delete_post_in_bd(post_id)
         else:
             await reply_msg(msg, MESSAGES['delete_access'])
+            
+async def help_(msg: types.Message):
+    await reply_msg(msg, MESSAGES['help'])
         
 async def register_handlers_new_post_redactors():
     router.message.register(cmd_new_post_func, Command('new_post'), StateFilter(default_state))
@@ -98,4 +101,4 @@ async def register_handlers_new_post_redactors():
     router.message.register(new_post_headline_func, F.text, StateFilter(FSMClient.new_post_headline))
     router.message.register(new_post_picture_func, F.text | F.photo, StateFilter(FSMClient.new_post_picture))
     router.message.register(change_post_data_message, (F.reply_to_message != None) & ((F.text.regexp(r'\A!(текст|заголовок) .')) | (F.caption == '!фото') & (F.content_type == 'photo') & (F.reply_to_message.content_type == 'photo')))
-    router.message.register(delete_post, (F.reply_to_message != None) & (F.text == '!удалить') & (F.chat.id == CHATS['redactors']))
+    router.message.register(help_, Command('help'), F.chat.id == CHATS['redactors'])
