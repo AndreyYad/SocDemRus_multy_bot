@@ -6,7 +6,7 @@ from time import time
 
 from main_modules.config import TIME_FOR_REPOST, ID_EMPTY_PICTURE
 
-path = path.abspath(__file__)[:path.abspath(__file__).rindex('\\modules')]
+path = path.abspath(__file__)[:path.abspath(__file__).rindex('modules')-1]
 
 get_time_repost = lambda: int(time())+TIME_FOR_REPOST
 

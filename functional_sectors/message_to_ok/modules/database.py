@@ -3,7 +3,7 @@
 from aiosqlite import connect
 from os import path
 
-path = path.abspath(__file__)[:path.abspath(__file__).rindex('\\modules')]
+path = path.abspath(__file__)[:path.abspath(__file__).rindex('modules')-1]
 
 async def set_end_cd(user_id: int, time_end_cd: int):
     '''Сохранение времени окончания коулдауна'''
