@@ -101,4 +101,5 @@ async def register_handlers_new_post_redactors():
     router.message.register(new_post_headline_func, F.text, StateFilter(FSMClient.new_post_headline))
     router.message.register(new_post_picture_func, F.text | F.photo, StateFilter(FSMClient.new_post_picture))
     router.message.register(change_post_data_message, (F.reply_to_message != None) & ((F.text.regexp(r'\A!(текст|заголовок) .')) | (F.caption == '!фото') & (F.content_type == 'photo') & (F.reply_to_message.content_type == 'photo')))
+    router.message.register(delete_post, (F.text == '!удалить') & (F.chat.id == CHATS['redactors']) & ((F.reply_to_message != None)))
     router.message.register(help_, Command('help'), F.chat.id == CHATS['redactors'])
