@@ -10,6 +10,10 @@ config = {
         "redactors" : 0,
         "designers" : 0
     },
+    "urls" : {
+        "sdr_vk" : ""
+    },
+    "channel" : 0,
     "developers" : [],
     "coulddawn_anonim_msg" : 3600,
     "time_for_repost" : 86400,

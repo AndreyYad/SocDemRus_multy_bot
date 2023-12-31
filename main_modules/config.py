@@ -11,6 +11,8 @@ with open('config.json') as file:
 TOKEN = config.get('token')
 DEBUG = config.get('debug')
 CHATS = config.get('chats')
+URLS = config.get('urls')
+CHANNEL = config.get('channel')
 DEVELOPERS = config.get('developers')
 COULDDAWN_ANONIM_MSG = config.get('coulddawn_anonim_msg')
 TIME_FOR_REPOST = config.get('time_for_repost')
