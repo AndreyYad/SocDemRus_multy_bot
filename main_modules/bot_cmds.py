@@ -23,7 +23,7 @@ async def send_msg_photo(chat_id: int, photo: types.InputFile, text: str, markup
 
 async def reply_msg(msg: types.Message, text: str, markup: types.InlineKeyboardMarkup=empty_markups, **kwargs):
     '''Ответ на сообщение'''
-    await msg.reply(text, reply_markup=markup, **kwargs)
+    return await msg.reply(text, reply_markup=markup, **kwargs)
     
 async def edit_msg_text(text: str, chat_id: int, msg_id: int, markup: types.InlineKeyboardMarkup=empty_markups, **kwargs):
     '''Редактирование сообщения'''
@@ -81,9 +81,12 @@ async def get_chat_name(chat_id: int):
 # async def send_to_topic(text:str,topic_chat_id:int,topic_id:int, **kwargs):
 #     await bot.send_message(topic_chat_id,text,parse_mode="html",reply_to_message_id=topic_id,**kwargs)
 
-async def forward_msg(chat_id_to: int, chat_id_from: int, msg_id: int, **kwargs):
+async def forward_msg(chat_id_to: int, chat_id_from: int, msg_id: int, anonim: bool=False, **kwargs):
     '''Пересылка сообщения'''
-    await bot.forward_message(chat_id_to, chat_id_from, msg_id, **kwargs)
+    if not anonim:
+        await bot.forward_message(chat_id_to, chat_id_from, msg_id, **kwargs)
+    else:
+        await bot.copy_message(chat_id_to, chat_id_from, msg_id, **kwargs)
     
 async def get_inputfile(file_id: str):
     '''Получение файла по его айди'''

@@ -5,12 +5,12 @@ from aiogram.filters import Command, StateFilter
 
 from main_modules.bot_cmds import send_msg
 from main_modules.config import CHANNEL
-from .modules.parsing import get_last_post
+from .modules.parsing import get_last_post, get_id_last_post
 
 router = Router()
 
 async def test_msg_channel(msg: types.Message):
-    await send_msg(msg.chat.id, await get_last_post())
+    await send_msg(msg.chat.id, await get_id_last_post(), disable_web_page_preview=False)
         
 async def register_handlers_repost_from_vk():
     router.message.register(test_msg_channel, Command('test'), StateFilter(default_state))

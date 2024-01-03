@@ -7,6 +7,7 @@ from functional_sectors.message_to_ok import handlers as message_to_ok_handlers
 from functional_sectors.new_post_redactors import handlers as new_post_redactors_handlers
 from functional_sectors.new_post_redactors import callbacks as new_post_redactors_callbacks
 from functional_sectors.repost_from_vk import handlers as repost_from_vk_handlers
+from functional_sectors.repost_from_vk import callbacks as repost_from_vk_callbacks
 
 storage = MemoryStorage()
 
@@ -18,5 +19,6 @@ dp.include_routers(
     message_to_ok_handlers.router,
     new_post_redactors_handlers.router,
     new_post_redactors_callbacks.router,
-    repost_from_vk_handlers.router
+    repost_from_vk_handlers.router,
+    repost_from_vk_callbacks.router
 )
